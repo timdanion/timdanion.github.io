@@ -798,9 +798,13 @@
   const heroContenu = document.querySelector('.hero-contenu');
   slidesArray.forEach(slide => conteneurSlides.insertBefore(slide, heroContenu));
 
+  // Réinitialise : seule la première du nouvel ordre est active
+  slidesArray.forEach(s => s.classList.remove('active'));
+  slidesArray[0].classList.add('active');
 
   const slides      = slidesArray;
   const conteneurPoints = document.getElementById('indicateurs');
+
 
       const INTERVALLE  = 6000;   // ← change ici la durée entre chaque slide (ms)
       let indexActuel   = 0;
