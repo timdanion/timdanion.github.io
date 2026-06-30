@@ -794,7 +794,7 @@
     [slidesArray[i], slidesArray[j]] = [slidesArray[j], slidesArray[i]];
   }
 
-  // Réinsère les slides dans le nouvel ordre, juste avant hero-contenu
+   // Réinsère les slides dans le nouvel ordre, juste avant hero-contenu
   const heroContenu = document.querySelector('.hero-contenu');
   slidesArray.forEach(slide => conteneurSlides.insertBefore(slide, heroContenu));
 
@@ -804,6 +804,7 @@
 
   const slides      = slidesArray;
   const conteneurPoints = document.getElementById('indicateurs');
+
 
 
       const INTERVALLE  = 6000;   // ← change ici la durée entre chaque slide (ms)
