@@ -88,7 +88,7 @@
     /* ═══════════════════════════════════════════════════════════════════
        SECTION 1 — HERO + SLIDESHOW
        Le slideshow occupe tout l'écran. Les images se fondent les unes
-       dans les autres toutes les 4 secondes (géré en JS plus bas).
+       dans les autres toutes les 5 secondes (géré en JS plus bas).
     ═══════════════════════════════════════════════════════════════════ */
     #hero {
       position: relative;
@@ -113,7 +113,7 @@
     /* Voile sombre pour que le texte reste lisible sur les photos */
     .slide-overlay {
       position: absolute;
-      inset: 0;
+      inset: 10;
       background: var(--overlay);
     }
 
@@ -786,7 +786,7 @@
     (function slideshow() {
       const slides      = document.querySelectorAll('.slide');
       const conteneurPoints = document.getElementById('indicateurs');
-      const INTERVALLE  = 4000;   // ← change ici la durée entre chaque slide (ms)
+      const INTERVALLE  = 6000;   // ← change ici la durée entre chaque slide (ms)
       let indexActuel   = 0;
       let timer;
 
