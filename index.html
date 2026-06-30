@@ -23,7 +23,7 @@
       --blanc:   #F0EDE8;   /* texte principal (blanc chaud)         */
       --gris:    #9A9A9A;   /* texte secondaire, légendes            */
       --cuivre:  #C8874A;   /* accent (navigation active, survol)    */
-      --overlay: rgba(10, 10, 10, 0.35); /* voile sombre sur photos */
+      --overlay: rgba(10, 10, 10, 0.25); /* voile sombre sur photos */
 
       --font-titre: 'Futura', 'Jost', 'Century Gothic', Trebuchet MS, sans-serif;
       --font-corps: 'Futura', 'Jost', 'Century Gothic', Trebuchet MS, sans-serif;  /* fond-corps original 'DM Sans', system-ui, sans-serif;                      */
@@ -785,8 +785,22 @@
        Les points de navigation sont générés dynamiquement.
     ───────────────────────────────────────────────────────────────── */
     (function slideshow() {
-      const slides      = document.querySelectorAll('.slide');
-      const conteneurPoints = document.getElementById('indicateurs');
+  const conteneurSlides = document.getElementById('hero');
+  const slidesArray = Array.from(document.querySelectorAll('.slide'));
+
+  // Mélange aléatoire des slides (algorithme Fisher-Yates)
+  for (let i = slidesArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [slidesArray[i], slidesArray[j]] = [slidesArray[j], slidesArray[i]];
+  }
+
+  // Réinsère les slides dans le nouvel ordre, juste avant hero-contenu
+  const heroContenu = document.querySelector('.hero-contenu');
+  slidesArray.forEach(slide => conteneurSlides.insertBefore(slide, heroContenu));
+
+  const slides      = slidesArray;
+  const conteneurPoints = document.getElementById('indicateurs');
+
       const INTERVALLE  = 6000;   // ← change ici la durée entre chaque slide (ms)
       let indexActuel   = 0;
       let timer;
