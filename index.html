@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timothée Lieby Danion — Réalisateur</title>
+
+  <!-- ─── POLICES Google Fonts ─────────────────────────────────────────────
+       Cormorant Garamond : titres éditoriaux, élégants
+       DM Sans            : corps de texte, lisible et moderne          -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400&display=swap" rel="stylesheet"  />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════════════
+       VARIABLES CSS — tout le système de design en un seul endroit.
+       Modifie ces valeurs pour changer l'aspect global du site.
+    ═══════════════════════════════════════════════════════════════════ */
+    :root {
+      --noir:    #0A0A0A;   /* fond principal                        */
+      --blanc:   #F0EDE8;   /* texte principal (blanc chaud)         */
+      --gris:    #9A9A9A;   /* texte secondaire, légendes            */
+      --cuivre:  #C8874A;   /* accent (navigation active, survol)    */
+      --overlay: rgba(10, 10, 10, 0.55); /* voile sombre sur photos */
+
+      --font-titre: 'Futura', 'Jost', 'Century Gothic', Trebuchet MS, sans-serif;
+      --font-corps: 'Futura', 'Jost', 'Century Gothic', Trebuchet MS, sans-serif;  /* fond-corps original 'DM Sans', system-ui, sans-serif;                      */
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;       /* défilement fluide entre sections */
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--noir);
+      color: var(--blanc);
+      font-family: var=(--font-corps);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── BARRE DE NAVIGATION ───────────────────────────────────────── */
+    nav {
+      position: fixed;               /* reste visible en scrollant      */
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      /* dégradé vers le bas : opaque en haut, transparent en bas */
+      background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+    }
+
+    .nav-logo {
+      font-family: var(--font-titre);
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blanc);
+      text-decoration: none;
+    }
+
+    .nav-liens {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-liens a {
+      color: var(--gris);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav-liens a:hover { color: var(--cuivre); }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SECTION 1 — HERO + SLIDESHOW
+       Le slideshow occupe tout l'écran. Les images se fondent les unes
+       dans les autres toutes les 4 secondes (géré en JS plus bas).
+    ═══════════════════════════════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Chaque slide = une image plein écran */
+    .slide {
+      position: absolute;
+      inset: 0;                      /* top/right/bottom/left: 0       */
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;  /* fondu enchaîné doux   */
+    }
+
+    /* La slide active est visible */
+    .slide.active { opacity: 1; }
+
+    /* Voile sombre pour que le texte reste lisible sur les photos */
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay);
+    }
+
+    /* Contenu centré sur le hero */
+    .hero-contenu {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 3rem;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--cuivre);
+      margin-bottom: 1rem;
+    }
+
+    /* Nom principal — grande taille éditoriale */
+    .hero-titre {
+      font-family: var(--font-titre);
+      font-size: clamp(3.5rem, 8vw, 7rem); /* adaptatif selon l'écran */
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Les lettres du nom sont animées à l'arrivée (voir JS) */
+    .hero-titre .lettre {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .hero-titre .lettre.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-sous-titre {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+
+    /* Indicateurs de slide (points en bas du hero) */
+    .slide-indicateurs {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 3;
+    }
+
+    .point {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gris);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .point.actif {
+      background: var(--cuivre);
+      transform: scale(1.4);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SECTION 2 — GALERIE PHOTO (grille)
+       Grille CSS asymétrique : certaines photos prennent plus de place.
+    ═══════════════════════════════════════════════════════════════════ */
+    #galerie {
+      padding: 6rem 3rem;
+    }
+
+    .section-titre {
+      font-family: var(--font-titre);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-trait {
+      width: 3rem;
+      height: 1px;
+      background: var(--cuivre);
+      margin-bottom: 3rem;
+    }
+
+    /* Grille photo — 3 colonnes égales */
+    .grille-photo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    /* Certains éléments s'étendent sur 2 colonnes */
+    .grille-photo .large { grid-column: span 2; }
+
+    /* Chaque cellule = un conteneur d'image avec ratio fixe */
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;           /* ratio constant quelle que soit la largeur */
+      background: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .photo-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;              /* l'image remplit sans déformer  */
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Zoom léger au survol */
+    .photo-item:hover img { transform: scale(1.04); }
+
+    /* Légende apparaissant au survol */
+    .photo-legende {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1rem 1.2rem;
+      background: linear-gradient(transparent, rgba(10,10,10,0.85));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--blanc);
+    }
+
+    .photo-item:hover .photo-legende { opacity: 1; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SECTION 3 — VIDÉOS
+       Cartes cliquables qui mènent vers les vidéos (YouTube/Vimeo/etc.)
+    ═══════════════════════════════════════════════════════════════════ */
+    #videos {
+      padding: 6rem 3rem;
+      background: #0f0f0f;           /* légèrement différent du noir pur */
+    }
+
+    /* Grille de cartes vidéo : 2 colonnes sur desktop */
+    .grille-video {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Chaque carte vidéo */
+    .carte-video {
+      display: block;                /* <a> se comporte comme un bloc   */
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      background: #1a1a1a;
+      transition: transform 0.4s ease;
+    }
+
+    .carte-video:hover { transform: translateY(-4px); }
+
+    /* Miniature de la vidéo */
+    .carte-vignette {
+      position: relative;
+      aspect-ratio: 16 / 9;          /* ratio cinéma standard           */
+      overflow: hidden;
+    }
+
+    .carte-vignette img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.8);
+    }
+
+    .carte-video:hover .carte-vignette img {
+      transform: scale(1.03);
+      filter: brightness(0.6);
+    }
+
+    /* Bouton play centré sur la vignette */
+    .bouton-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bouton-play svg {
+      width: 54px; height: 54px;
+      opacity: 0.7;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .carte-video:hover .bouton-play svg {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* Informations sous la vignette */
+    .carte-info {
+      padding: 1.2rem 1.4rem 1.4rem;
+    }
+
+    .carte-categorie {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cuivre);
+      margin-bottom: 0.4rem;
+    }
+
+    .carte-titre {
+      font-family: var(--font-titre);
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin-bottom: 0.4rem;
+    }
+
+    .carte-description {
+      font-size: 0.82rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SECTION 4 — À PROPOS (courte biographie)
+    ═══════════════════════════════════════════════════════════════════ */
+    #a-propos {
+      padding: 6rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 4rem;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .apropos-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      filter: grayscale(30%);
+    }
+
+    .apropos-texte p {
+      color: var(--gris);
+      margin-bottom: 1.4rem;
+      font-size: 0.95rem;
+    }
+
+    .apropos-texte strong { color: var(--blanc); font-weight: 400; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SECTION 5 — CONTACT
+    ═══════════════════════════════════════════════════════════════════ */
+    #contact {
+      padding: 5rem 3rem 4rem;
+      text-align: center;
+      border-top: 1px solid #222;
+    }
+
+    .contact-email {
+      font-family: var(--font-titre);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-style: italic;
+      color: var(--blanc);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.3s;
+    }
+
+    .contact-email:hover { color: var(--cuivre); }
+
+    .contact-reseaux {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-reseaux a {
+      color: var(--gris);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .contact-reseaux a:hover { color: var(--cuivre); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.72rem;
+      color: #444;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── RESPONSIVE : tablettes & mobiles ─────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-liens { gap: 1.5rem; }
+
+      .hero-contenu { padding: 0 1.5rem; }
+
+      #galerie, #videos, #contact { padding: 4rem 1.5rem; }
+
+      /* Sur mobile : 2 colonnes pour la galerie */
+      .grille-photo {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grille-photo .large { grid-column: span 2; }
+
+      /* Sur mobile : 1 colonne pour les vidéos */
+      .grille-video { grid-template-columns: 1fr; }
+
+      /* À propos : empilement vertical */
+      #a-propos {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 4rem 1.5rem;
+      }
+    }
+
+    /* Respect de la préférence système "réduire les animations" */
+    @media (prefers-reduced-motion: reduce) {
+      .slide { transition: none; }
+      .hero-titre .lettre { transition: none; }
+      .photo-item img, .carte-video, .bouton-play svg { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       NAVIGATION FIXE
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav>
+    <a href="#hero" class="nav-logo">TLD</a>
+    <ul class="nav-liens">
+      <li><a href="#galerie">Photos</a></li>
+      <li><a href="#videos">Films</a></li>
+      <li><a href="#a-propos">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SECTION 1 — HERO + SLIDESHOW
+       Les slides utilisent des photos libres de droits (Unsplash).
+       Remplace les URLs par tes propres images.
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="hero">
+
+    <!--
+      SLIDES — ajoute autant de .slide que tu veux.
+      background-image : l'URL de ta photo plein écran.
+      La première a class="slide active" pour être visible au départ.
+    -->
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80')">
+      <div class="slide-overlay"></div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=1600&q=80')">
+      <div class="slide-overlay"></div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600&q=80')">
+      <div class="slide-overlay"></div>
+    </div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600&q=80')">
+      <div class="slide-overlay"></div>
+    </div>
+
+    <!-- Texte superposé -->
+    <div class="hero-contenu">
+      <p class="hero-eyebrow"> Réalisateur</p>
+      <!-- Le JS découpe ce nom en lettres pour l'animer -->
+      <h1 class="hero-titre" id="heroNom">Timothée Lieby Danion</h1>
+      <p class="hero-sous-titre">Emotion — Aventure — Lumière</p>
+    </div>
+
+    <!-- Points de navigation du slideshow -->
+    <div class="slide-indicateurs" id="indicateurs"></div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SECTION 2 — GALERIE PHOTO
+       Grille asymétrique. class="large" = photo sur 2 colonnes.
+       Remplace les src="" par tes images.
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="galerie">
+    <h2 class="section-titre">Photographie</h2>
+    <div class="section-trait"></div>
+
+    <div class="grille-photo">
+
+      <!-- Photo large (2 colonnes) -->
+      <div class="photo-item large">
+        <img src="https://images.unsplash.com/photo-1540206395-68808572332f?w=1200&q=80" alt="Paysage côtier" loading="lazy" />
+        <span class="photo-legende">Portraits</span>
+      </div>
+
+      <!-- Photo normale (1 colonne) -->
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1510797215324-95aa89f43c33?w=800&q=80" alt="Portrait" loading="lazy" />
+        <span class="photo-legende">Photos de tournage</span>
+      </div>
+
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Forêt" loading="lazy" />
+        <span class="photo-legende">Vercors — automne</span>
+      </div>
+
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80" alt="Montagne" loading="lazy" />
+        <span class="photo-legende">Alpes — hiver 2023</span>
+      </div>
+
+      <!-- Photo large (2 colonnes) -->
+      <div class="photo-item large">
+        <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=1200&q=80" alt="Désert" loading="lazy" />
+        <span class="photo-legende">Namibie — série Aride</span>
+      </div>
+
+      <div class="photo-item">
+        <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=800&q=80" alt="Village" loading="lazy" />
+        <span class="photo-legende">Sardaigne — 2023</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SECTION 3 — VIDÉOS
+       Chaque carte est un lien <a href=""> vers ta vidéo.
+       Remplace les liens href et les images par tes propres contenus.
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="videos">
+    <h2 class="section-titre">Films</h2>
+    <div class="section-trait"></div>
+
+    <div class="grille-video">
+
+      <!--
+        CARTE VIDÉO — modifie :
+          href        → lien vers YouTube, Vimeo, ou page dédiée
+          src img     → ta miniature (screenshot de la vidéo)
+          alt         → description accessible
+          categorie   → type de film (docu, clip, fiction…)
+          titre       → titre du film
+          description → courte description
+      -->
+      <a class="carte-video" href="https://vimeo.com/XXXXXXX" target="_blank" rel="noopener">
+        <div class="carte-vignette">
+          <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=900&q=80" alt="Court-métrage Après la pluie" loading="lazy" />
+          <div class="bouton-play">
+            <!-- Icône play en SVG — pas de dépendance externe -->
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#F0EDE8" stroke-width="1.5"/>
+              <polygon points="32,24 60,40 32,56" fill="#F0EDE8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-info">
+          <p class="carte-categorie">Court-métrage</p>
+          <h3 class="carte-titre">Après la pluie</h3>
+          <p class="carte-description">Un village normand, deux saisons. Premier film de la série Territoires, 2024.</p>
+        </div>
+      </a>
+
+      <a class="carte-video" href="https://vimeo.com/XXXXXXX" target="_blank" rel="noopener">
+        <div class="carte-vignette">
+          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=900&q=80" alt="Documentaire Voix du Fer" loading="lazy" />
+          <div class="bouton-play">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#F0EDE8" stroke-width="1.5"/>
+              <polygon points="32,24 60,40 32,56" fill="#F0EDE8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-info">
+          <p class="carte-categorie">Documentaire</p>
+          <h3 class="carte-titre">Voix du fer</h3>
+          <p class="carte-description">Portrait de quatre forgerons d'exception. Sélection festival Cinéma du Réel.</p>
+        </div>
+      </a>
+
+      <a class="carte-video" href="https://vimeo.com/XXXXXXX" target="_blank" rel="noopener">
+        <div class="carte-vignette">
+          <img src="https://images.unsplash.com/photo-1574717024453-354056aafa98?w=900&q=80" alt="Clip Onde" loading="lazy" />
+          <div class="bouton-play">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#F0EDE8" stroke-width="1.5"/>
+              <polygon points="32,24 60,40 32,56" fill="#F0EDE8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-info">
+          <p class="carte-categorie">Clip musical</p>
+          <h3 class="carte-titre">Onde</h3>
+          <p class="carte-description">Clip officiel — Madeleine Roux. Tournage en Super 8, Camargue, 2023.</p>
+        </div>
+      </a>
+
+      <a class="carte-video" href="https://vimeo.com/XXXXXXX" target="_blank" rel="noopener">
+        <div class="carte-vignette">
+          <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=900&q=80" alt="Showreel 2024" loading="lazy" />
+          <div class="bouton-play">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" stroke="#F0EDE8" stroke-width="1.5"/>
+              <polygon points="32,24 60,40 32,56" fill="#F0EDE8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="carte-info">
+          <p class="carte-categorie">Showreel</p>
+          <h3 class="carte-titre">Réel 2024</h3>
+          <p class="carte-description">Sélection de travaux photo et vidéo — année 2024.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SECTION 4 — À PROPOS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="a-propos">
+    <img
+      class="apropos-photo"
+      src="https://kdrive.infomaniak.com/app/share/1365409/f9771184-7393-485c-afd6-424a0a5fa6bc"
+      alt="Portrait de Timothée Lieby Danion"
+      loading="lazy"
+    />
+    <div class="apropos-texte"
+   
+      <h2 class="section-titre" style="margin-bottom:1rem;">TIMOTHEE LIEBY DANION</h2>
+      <p>
+        Photographe et Assistant Réalisateur basé à <strong>Sommières</strong> dans le Gard, je travaille depuis 2015
+        sur les plateaux de tournage en fiction télé. En m'appuyant sur une <strong>formation technique</strong> solide, une <strong>éducation artistique</strong> riche
+        et mon expérience aux cotés des <strong>réalisateurs</strong> et <strong>chefs opérateurs</strong> qui font la télé d'aujourd'hui, je me lance en 2026 dans la réalisation.
+        Profondément inspiré par les relations humaines, je concentre mon travail sur <strong>l'émotion</strong> et la <strong>lumière naturelle</strong>.
+        Passionné d'aventures et de nature, je peux me dépasser pour obtenir l'image, le point de vue que personne n'avait trouvé avant.
+       
+      </p>
+      <p>
+   
+      </p>
+      <p>
+        Je dispose d'une caméra Nikon ZR avec optiques Nikon, et d'un Stabilisateur Ronin RS4 Pro qui me permettent de filmer des images de la plus haute qualité et dans une immense variété de situations.
+       
+        Disponible pour des <strong>commandes éditoriales</strong>,
+        des <strong>clips</strong>, des <strong>films de marque</strong>
+        et des <strong>expositions</strong>. Je peux étudier toute forme d'écrit narratif pour en faire un scénario.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SECTION 5 — CONTACT
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="contact">
+    <p class="hero-eyebrow" style="margin-bottom:1.5rem;">Travaillons ensemble</p>
+    <a href="mailto:contact@jeanmoreau.fr" class="contact-email">timdanion@gmail.com</a>
+    <div class="contact-reseaux">
+      <a href="https://www.instagram.com/timdanion?utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://vimeo.com/" target="_blank" rel="noopener">Vimeo</a>
+      <a href="https://www.imdb.com/fr/name/nm6971271/?ref_=nv_sr_srsg_0_tt_0_nm_1_in_0_q_timothee%20lieby%20danion" target="_blank" rel="noopener">IMDB</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Timothée Lieby Danion — Tous droits réservés
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       JAVASCRIPT — tout regroupé ici, commenté pas à pas
+
+       1) Animation des lettres du titre hero
+       2) Slideshow automatique avec indicateurs
+  ═══════════════════════════════════════════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────────────────────────────
+       1. ANIMATION DES LETTRES DU TITRE
+       On découpe le texte en <span> individuels, puis on les révèle
+       en cascade avec un délai croissant.
+    ───────────────────────────────────────────────────────────────── */
+    (function animerTitre() {
+      const el = document.getElementById('heroNom');
+      const texte = el.textContent;   // "Jean Moreau"
+
+      // Vide le contenu et reconstruit lettre par lettre
+      el.textContent = '';
+      texte.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.classList.add('lettre');
+        // L'espace est un caractère non-brisant pour garder la mise en page
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        el.appendChild(span);
+
+        // Chaque lettre apparaît 80ms après la précédente
+        setTimeout(() => span.classList.add('visible'), 300 + i * 80);
+      });
+    })();
+
+
+    /* ─────────────────────────────────────────────────────────────────
+       2. SLIDESHOW
+       Logique : on garde un index de la slide courante.
+       Toutes les INTERVALLE ms, on passe à la suivante.
+       Les points de navigation sont générés dynamiquement.
+    ───────────────────────────────────────────────────────────────── */
+    (function slideshow() {
+      const slides      = document.querySelectorAll('.slide');
+      const conteneurPoints = document.getElementById('indicateurs');
+      const INTERVALLE  = 4000;   // ← change ici la durée entre chaque slide (ms)
+      let indexActuel   = 0;
+      let timer;
+
+      // Génère un point par slide
+      slides.forEach((_, i) => {
+        const point = document.createElement('button');
+        point.classList.add('point');
+        point.setAttribute('aria-label', `Slide ${i + 1}`);
+        if (i === 0) point.classList.add('actif');
+
+        // Clic sur un point → aller directement à cette slide
+        point.addEventListener('click', () => {
+          clearInterval(timer);   // arrête le défilement auto
+          allerA(i);
+          timer = setInterval(suivante, INTERVALLE);  // reprend
+        });
+
+        conteneurPoints.appendChild(point);
+      });
+
+      const points = conteneurPoints.querySelectorAll('.point');
+
+      // Affiche la slide à l'index donné
+      function allerA(index) {
+        slides[indexActuel].classList.remove('active');
+        points[indexActuel].classList.remove('actif');
+
+        indexActuel = index;
+
+        slides[indexActuel].classList.add('active');
+        points[indexActuel].classList.add('actif');
+      }
+
+      // Passe à la slide suivante (boucle)
+      function suivante() {
+        allerA((indexActuel + 1) % slides.length);
+      }
+
+      // Démarre le défilement automatique
+      timer = setInterval(suivante, INTERVALLE);
+    })();
+  </script>
+
+</body>
+</html>
