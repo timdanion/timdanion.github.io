@@ -797,6 +797,9 @@
   // Réinsère les slides dans le nouvel ordre, juste avant hero-contenu
   const heroContenu = document.querySelector('.hero-contenu');
   slidesArray.forEach(slide => conteneurSlides.insertBefore(slide, heroContenu));
+      slidesArray.forEach(s => s.classList.remove('active'));
+slidesArray[0].classList.add('active');
+
 
   const slides      = slidesArray;
   const conteneurPoints = document.getElementById('indicateurs');
