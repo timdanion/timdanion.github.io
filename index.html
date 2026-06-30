@@ -447,13 +447,28 @@
     }
 
     /* ─── RESPONSIVE : tablettes & mobiles ─────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 1.2rem 1.5rem; }
-      .nav-liens { gap: 1.5rem; }
+   @media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .nav-liens {
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.65rem;
+  }
+
+  .nav-liens a {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
 
       .hero-contenu { padding: 0 1.5rem; }
       .hero-titre {
-  font-size: clamp(2.2rem, 9vw, 3.5rem);
+  font-size: clamp(1.8rem, 8vw, 2.8rem);
 }
       .hero-sous-titre {
   font-size: 0.85rem;
