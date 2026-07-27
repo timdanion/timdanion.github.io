@@ -22,9 +22,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; font-size: 16px; }
-
     body {
       background-color: var(--noir);
       color: var(--blanc);
@@ -45,7 +43,6 @@
       padding: 1.4rem 3rem;
       background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
     }
-
     .nav-logo {
       font-family: var(--font-titre);
       font-size: 1.1rem;
@@ -54,13 +51,11 @@
       color: var(--blanc);
       text-decoration: none;
     }
-
     .nav-liens {
       display: flex;
       gap: 2.5rem;
       list-style: none;
     }
-
     .nav-liens a {
       color: var(--gris);
       text-decoration: none;
@@ -69,7 +64,6 @@
       text-transform: uppercase;
       transition: color 0.3s ease;
     }
-
     .nav-liens a:hover { color: var(--cuivre); }
 
     /* ─── SÉLECTEUR DE LANGUE ─── */
@@ -79,7 +73,6 @@
       align-items: center;
       margin-left: 2rem;
     }
-
     .lang-btn {
       background: none;
       border: none;
@@ -92,14 +85,9 @@
       font-family: var(--font-titre);
       text-transform: uppercase;
     }
-
     .lang-btn:hover { color: var(--blanc); }
     .lang-btn.actif { color: var(--cuivre); }
-
-    .lang-separateur {
-      color: #333;
-      font-size: 0.6rem;
-    }
+    .lang-separateur { color: #333; font-size: 0.6rem; }
 
     /* ─── HERO ─── */
     #hero {
@@ -108,7 +96,6 @@
       height: 100vh;
       overflow: hidden;
     }
-
     .slide {
       position: absolute;
       inset: 0;
@@ -117,15 +104,12 @@
       opacity: 0;
       transition: opacity 1.2s ease-in-out;
     }
-
     .slide.active { opacity: 1; }
-
     .slide-overlay {
       position: absolute;
       inset: 0;
       background: var(--overlay);
     }
-
     .hero-contenu {
       position: absolute;
       inset: 0;
@@ -136,7 +120,6 @@
       padding: 0 3rem;
       z-index: 2;
     }
-
     .hero-eyebrow {
       font-size: 0.72rem;
       letter-spacing: 0.3em;
@@ -144,7 +127,6 @@
       color: var(--cuivre);
       margin-bottom: 1rem;
     }
-
     .hero-titre {
       font-family: var(--font-titre);
       font-size: clamp(3.5rem, 8vw, 7rem);
@@ -153,26 +135,22 @@
       letter-spacing: -0.01em;
       margin-bottom: 1.5rem;
     }
-
     .hero-titre .lettre {
       display: inline-block;
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-
     .hero-titre .lettre.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
     .hero-sous-titre {
       font-style: italic;
       font-size: 1.1rem;
       color: var(--gris);
       letter-spacing: 0.05em;
     }
-
     .slide-indicateurs {
       position: absolute;
       bottom: 2rem;
@@ -182,7 +160,6 @@
       gap: 0.8rem;
       z-index: 3;
     }
-
     .point {
       width: 8px; height: 8px;
       border-radius: 50%;
@@ -192,9 +169,7 @@
       padding: 0;
       transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
     }
-
     .point:hover { border-color: var(--cuivre); transform: scale(1.2); }
-
     .point.actif {
       background: var(--cuivre);
       border-color: var(--cuivre);
@@ -203,7 +178,6 @@
 
     /* ─── GALERIE ─── */
     #galerie { padding: 6rem 3rem; }
-
     .section-titre {
       font-family: var(--font-titre);
       font-size: clamp(2rem, 4vw, 3.2rem);
@@ -211,22 +185,18 @@
       letter-spacing: 0.02em;
       margin-bottom: 0.5rem;
     }
-
     .section-trait {
       width: 3rem;
       height: 1px;
       background: var(--cuivre);
       margin-bottom: 3rem;
     }
-
     .grille-photo {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.75rem;
     }
-
     .grille-photo .large { grid-column: span 2; }
-
     .photo-item {
       position: relative;
       overflow: hidden;
@@ -234,16 +204,13 @@
       background: #1a1a1a;
       cursor: pointer;
     }
-
     .photo-item img {
       width: 100%; height: 100%;
       object-fit: cover;
       display: block;
       transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
     .photo-item:hover img { transform: scale(1.04); }
-
     .photo-legende {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -255,8 +222,62 @@
       letter-spacing: 0.08em;
       color: var(--blanc);
     }
-
     .photo-item:hover .photo-legende { opacity: 1; }
+
+    /* ─── VIDÉOS ─── */
+    #videos {
+      padding: 6rem 3rem;
+      background: #0f0f0f;
+    }
+
+    /* Grille vidéo : 1 colonne par défaut, 2 si plusieurs vidéos */
+    .grille-video {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 900px;
+    }
+
+    .carte-video-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* Conteneur responsive 16:9 */
+    .video-embed {
+      position: relative;
+      padding-top: 56.25%;
+      background: #111;
+    }
+    .video-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .video-meta {
+      padding: 0.2rem 0;
+    }
+    .video-categorie {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cuivre);
+      margin-bottom: 0.3rem;
+    }
+    .video-titre {
+      font-family: var(--font-titre);
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-bottom: 0.3rem;
+    }
+    .video-description {
+      font-size: 0.82rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
 
     /* ─── À PROPOS ─── */
     #a-propos {
@@ -268,14 +289,12 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-
     .apropos-photo {
       width: 100%;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       filter: grayscale(30%);
     }
-
     .apropos-nom {
       font-family: var(--font-titre);
       font-size: clamp(1.8rem, 3vw, 2.6rem);
@@ -283,13 +302,11 @@
       letter-spacing: -0.01em;
       margin-bottom: 1rem;
     }
-
     .apropos-texte p {
       color: var(--gris);
       margin-bottom: 1.4rem;
       font-size: 0.95rem;
     }
-
     .apropos-texte strong { color: var(--blanc); font-weight: 400; }
 
     /* ─── CONTACT ─── */
@@ -298,7 +315,6 @@
       text-align: center;
       border-top: 1px solid #222;
     }
-
     .contact-email {
       font-family: var(--font-titre);
       font-size: clamp(1.8rem, 4vw, 3rem);
@@ -308,16 +324,13 @@
       letter-spacing: 0.03em;
       transition: color 0.3s;
     }
-
     .contact-email:hover { color: var(--cuivre); }
-
     .contact-reseaux {
       display: flex;
       justify-content: center;
       gap: 2rem;
       margin-top: 2rem;
     }
-
     .contact-reseaux a {
       color: var(--gris);
       text-decoration: none;
@@ -326,7 +339,6 @@
       text-transform: uppercase;
       transition: color 0.3s;
     }
-
     .contact-reseaux a:hover { color: var(--cuivre); }
 
     footer {
@@ -345,35 +357,26 @@
         padding: 1rem 1.2rem;
         gap: 0.6rem;
       }
-
       .nav-liens { gap: 1rem; flex-wrap: wrap; }
       .nav-liens a { font-size: 0.65rem; letter-spacing: 0.1em; }
-
       .lang-switcher { margin-left: 0; }
-
       .hero-contenu { padding: 0 1.5rem; }
       .hero-titre { font-size: clamp(1.8rem, 8vw, 2.8rem); }
       .hero-sous-titre { font-size: 0.85rem; }
-
       .slide-indicateurs {
         max-width: 90%;
         flex-wrap: wrap;
         justify-content: center;
       }
-
       .apropos-photo {
         max-height: 40vh;
         width: auto;
         margin: 0 auto;
         display: block;
       }
-
       #galerie, #videos, #contact { padding: 4rem 1.5rem; }
-
       .grille-photo { grid-template-columns: repeat(2, 1fr); }
       .grille-photo .large { grid-column: span 2; }
-      .grille-video { grid-template-columns: 1fr; }
-
       #a-propos {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -384,7 +387,7 @@
     @media (prefers-reduced-motion: reduce) {
       .slide { transition: none; }
       .hero-titre .lettre { transition: none; }
-      .photo-item img, .bouton-play svg { transition: none; }
+      .photo-item img { transition: none; }
     }
   </style>
 </head>
@@ -396,6 +399,7 @@
     <a href="#hero" class="nav-logo">TLD</a>
     <ul class="nav-liens">
       <li><a href="#galerie" data-i18n="nav_photos">Photos</a></li>
+      <li><a href="#videos" data-i18n="nav_films">Films</a></li>
       <li><a href="#a-propos" data-i18n="nav_apropos">À propos</a></li>
       <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
     </ul>
@@ -408,58 +412,33 @@
     </div>
   </nav>
 
+
   <!-- HERO + SLIDESHOW -->
   <section id="hero">
+    <div class="slide active" style="background-image: url('PhotosAccueil/DSC_1481.jpg')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/DSC_3095-2.jpg')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0120.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0140.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0167.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0175.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0177.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0332.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0356.JPG')"><div class="slide-overlay"></div></div>
+    <div class="slide" style="background-image: url('PhotosAccueil/DSC7767_1.jpg')"><div class="slide-overlay"></div></div>
 
-    <div class="slide active" style="background-image: url('PhotosAccueil/DSC_1481.jpg')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/DSC_3095-2.jpg')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0120.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0140.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0167.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0175.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0177.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0332.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/IMG_0356.JPG')">
-      <div class="slide-overlay"></div>
-    </div>
-    <div class="slide" style="background-image: url('PhotosAccueil/DSC7767_1.jpg')">
-      <div class="slide-overlay"></div>
-    </div>
-
-    <!-- Texte superposé -->
     <div class="hero-contenu">
       <p class="hero-eyebrow" data-i18n="metier">Réalisateur</p>
       <h1 class="hero-titre" id="heroNom">Timothée Lieby Danion</h1>
       <p class="hero-sous-titre" data-i18n="soustitre">Émotion — Narration — Lumière</p>
     </div>
-
     <div class="slide-indicateurs" id="indicateurs"></div>
-
   </section>
 
 
   <!-- GALERIE PHOTO -->
   <section id="galerie">
-
     <h2 class="section-titre" data-i18n="titre_portraits">Portraits</h2>
     <div class="section-trait"></div>
-
     <div class="grille-photo">
       <div class="photo-item large">
         <img src="PhotosPortraits/DSC9684_1.jpg" alt="" loading="lazy" />
@@ -487,10 +466,8 @@
       </div>
     </div>
 
-    <!-- Sous-section : Photos de tournage -->
     <h2 class="section-titre" style="margin-top:5rem;" data-i18n="titre_tournage">Photos de tournage</h2>
     <div class="section-trait"></div>
-
     <div class="grille-photo">
       <div class="photo-item large">
         <img src="PhotosTournages/IMG_5899.JPG" loading="lazy" />
@@ -504,36 +481,51 @@
         <img src="PhotosTournages/IMG_9350.JPG" loading="lazy" />
         <span class="photo-legende" data-i18n="legende_3">Octobre 2024 — USGS — Opéra Comédie</span>
       </div>
-         <div class="photo-item">
+      <div class="photo-item">
         <img src="PhotosTournages/IMG_9611.JPG" loading="lazy" />
-        <span class="photo-legende" data-i18n="legende_4">Janvier 2026 - ITC - Stead à la ferme </span>
-           <div class="photo-item">
+        <span class="photo-legende" data-i18n="legende_4">Janvier 2026 — ITC — Stead à la ferme</span>
+      </div>
+      <div class="photo-item">
         <img src="PhotosTournages/IMG_8794.JPG" loading="lazy" />
-        <span class="photo-legende" data-i18n="legende_4">Septembre 2025 ITC - Dom Delguste </span>
+        <span class="photo-legende" data-i18n="legende_5">Septembre 2025 — ITC — Dom Delguste</span>
       </div>
     </div>
-
   </section>
 
 
-  <!-- SECTION FILMS (en commentaire — pas encore de contenu) -->
-  <!--
+  <!-- FILMS -->
   <section id="videos">
-    <h2 class="section-titre">Films</h2>
+    <h2 class="section-titre" data-i18n="nav_films">Films</h2>
     <div class="section-trait"></div>
-    ...
+
+    <div class="grille-video">
+
+      <!-- ─── VIDÉO 1 ───
+           Pour ajouter d'autres vidéos : copie ce bloc .carte-video-wrapper
+           et remplace l'URL Vimeo et les textes. -->
+      <div class="carte-video-wrapper">
+        <div class="video-embed">
+          <iframe
+            src="https://player.vimeo.com/video/1213161871?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="50 ans du comité des fêtes de Salinelles">
+          </iframe>
+        </div>
+        <div class="video-meta">
+          <p class="video-categorie" data-i18n="film1_categorie">Documentaire</p>
+          <h3 class="video-titre" data-i18n="film1_titre">50 ans du comité des fêtes de Salinelles</h3>
+          <p class="video-description" data-i18n="film1_description">Une journée à l'Ancienne — Salinelles, 2025.</p>
+        </div>
+      </div>
+
+    </div>
   </section>
-  -->
 
 
   <!-- À PROPOS -->
   <section id="a-propos">
-    <img
-      class="apropos-photo"
-      src="IMG_2708.PNG"
-      alt="Portrait de Timothée Lieby Danion"
-      loading="lazy"
-    />
+    <img class="apropos-photo" src="IMG_2708.PNG" alt="Portrait de Timothée Lieby Danion" loading="lazy" />
     <div class="apropos-texte">
       <h2 class="apropos-nom">Timothée Lieby Danion</h2>
       <p data-i18n-html="bio_1">
@@ -563,7 +555,7 @@
     <a href="mailto:timdanion@gmail.com" class="contact-email">timdanion@gmail.com</a>
     <div class="contact-reseaux">
       <a href="https://www.instagram.com/timdanion?utm_source=qr" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://vimeo.com/" target="_blank" rel="noopener">Vimeo</a>
+      <a href="https://vimeo.com/user26148178/" target="_blank" rel="noopener">Vimeo</a>
       <a href="https://www.imdb.com/fr/name/nm6971271/?ref_=nv_sr_srsg_0_tt_0_nm_1_in_0_q_timothee%20lieby%20danion" target="_blank" rel="noopener">IMDB</a>
     </div>
   </section>
@@ -573,21 +565,30 @@
   </footer>
 
 
+  <!-- API Vimeo (nécessaire pour le player embed) -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
   <script>
     /* ─── TRADUCTIONS ─── */
     const traductions = {
       fr: {
-        metier:          "Réalisateur",
-        soustitre:       "Émotion — Narration — Lumière",
-        nav_photos:      "Photos",
-        nav_apropos:     "À propos",
-        nav_contact:     "Contact",
-        titre_portraits: "Portraits",
-        titre_tournage:  "Photos de tournage",
-        legende_1:       "Été 2025 — Nouveau Jour — Décor Château",
-        legende_2:       "Septembre 2025 — ITC — L'Hôtel Jourdain",
-        legende_3:       "Octobre 2024 — USGS — Opéra Comédie",
-        contact_cta:     "Travaillons ensemble",
+        metier:           "Réalisateur",
+        soustitre:        "Émotion — Narration — Lumière",
+        nav_photos:       "Photos",
+        nav_films:        "Films",
+        nav_apropos:      "À propos",
+        nav_contact:      "Contact",
+        titre_portraits:  "Portraits",
+        titre_tournage:   "Photos de tournage",
+        legende_1:        "Été 2025 — Nouveau Jour — Décor Château",
+        legende_2:        "Septembre 2025 — ITC — L'Hôtel Jourdain",
+        legende_3:        "Octobre 2024 — USGS — Opéra Comédie",
+        legende_4:        "Janvier 2026 — ITC — Stead à la ferme",
+        legende_5:        "Septembre 2025 — ITC — Dom Delguste",
+        film1_categorie:  "Documentaire",
+        film1_titre:      "50 ans du comité des fêtes de Salinelles",
+        film1_description:"Une journée à l'Ancienne — Salinelles, 2025.",
+        contact_cta:      "Travaillons ensemble",
         bio_1: `Photographe et Assistant Réalisateur basé à <strong>Sommières</strong> dans le Gard, je travaille depuis 2015
           sur les plateaux de tournage en fiction télé. En m'appuyant sur une <strong>formation technique</strong> solide,
           une <strong>éducation artistique</strong> riche et mon expérience aux côtés des <strong>réalisateurs</strong>
@@ -603,17 +604,23 @@
           Je parle couramment <strong>Anglais</strong> et <strong>Espagnol</strong>.`
       },
       en: {
-        metier:          "Director",
-        soustitre:       "Emotion — Narrative — Light",
-        nav_photos:      "Photos",
-        nav_apropos:     "About",
-        nav_contact:     "Contact",
-        titre_portraits: "Portraits",
-        titre_tournage:  "On-set Photos",
-        legende_1:       "Summer 2025 — Nouveau Jour — Castle Set",
-        legende_2:       "September 2025 — ITC — Hôtel Jourdain",
-        legende_3:       "October 2024 — USGS — Opéra Comédie",
-        contact_cta:     "Let's work together",
+        metier:           "Director",
+        soustitre:        "Emotion — Narrative — Light",
+        nav_photos:       "Photos",
+        nav_films:        "Films",
+        nav_apropos:      "About",
+        nav_contact:      "Contact",
+        titre_portraits:  "Portraits",
+        titre_tournage:   "On-set Photos",
+        legende_1:        "Summer 2025 — Nouveau Jour — Castle Set",
+        legende_2:        "September 2025 — ITC — Hôtel Jourdain",
+        legende_3:        "October 2024 — USGS — Opéra Comédie",
+        legende_4:        "January 2026 — ITC — Steadicam on location",
+        legende_5:        "September 2025 — ITC — Dom Delguste",
+        film1_categorie:  "Documentary",
+        film1_titre:      "50 years of the Salinelles village committee",
+        film1_description:"A day in the old way — Salinelles, 2025.",
+        contact_cta:      "Let's work together",
         bio_1: `Photographer and Assistant Director based in <strong>Sommières</strong>, South of France, I have been working
           since 2015 on television fiction sets. Drawing on a solid <strong>technical background</strong>, a rich
           <strong>artistic education</strong> and my experience alongside the <strong>directors</strong> and
@@ -629,18 +636,24 @@
           I am fluent in <strong>French</strong>, <strong>English</strong> and <strong>Spanish</strong>.`
       },
       es: {
-        metier:          "Director",
-        soustitre:       "Emoción — Narración — Luz",
-        nav_photos:      "Fotos",
-        nav_apropos:     "Sobre mí",
-        nav_contact:     "Contacto",
-        titre_portraits: "Retratos",
-        titre_tournage:  "Fotos de rodaje",
-        legende_1:       "Verano 2025 — Nouveau Jour — Decorado Castillo",
-        legende_2:       "Septiembre 2025 — ITC — Hôtel Jourdain",
-        legende_3:       "Octubre 2024 — USGS — Opéra Comédie",
-        contact_cta:     "Trabajemos juntos",
-        bio_1: `Fotógrafo y Ayudante de Dirección con base en <strong>Sommières</strong>, sur de Francia, trabajo desde 2015
+        metier:           "Director",
+        soustitre:        "Emoción — Narración — Luz",
+        nav_photos:       "Fotos",
+        nav_films:        "Películas",
+        nav_apropos:      "Sobre mí",
+        nav_contact:      "Contacto",
+        titre_portraits:  "Retratos",
+        titre_tournage:   "Fotos de rodaje",
+        legende_1:        "Verano 2025 — Nouveau Jour — Decorado Castillo",
+        legende_2:        "Septiembre 2025 — ITC — Hôtel Jourdain",
+        legende_3:        "Octubre 2024 — USGS — Opéra Comédie",
+        legende_4:        "Enero 2026 — ITC — Steadicam en exteriores",
+        legende_5:        "Septiembre 2025 — ITC — Dom Delguste",
+        film1_categorie:  "Documental",
+        film1_titre:      "50 años del comité de fiestas de Salinelles",
+        film1_description:"Un día a la antigua usanza — Salinelles, 2025.",
+        contact_cta:      "Trabajemos juntos",
+        bio_1: `Fotógrafo y Ayudante de Dirección basado en <strong>Sommières</strong>, sur de Francia, trabajo desde 2015
           en platós de ficción televisiva. Apoyándome en una sólida <strong>formación técnica</strong>, una rica
           <strong>educación artística</strong> y mi experiencia junto a los <strong>directores</strong>
           y <strong>directores de fotografía</strong> que hacen la televisión de hoy, me lanzo en 2026 a la dirección.
@@ -657,30 +670,20 @@
     };
 
     function setLang(lang) {
-      // Textes simples
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (traductions[lang][key] !== undefined) {
-          el.textContent = traductions[lang][key];
-        }
+        if (traductions[lang][key] !== undefined) el.textContent = traductions[lang][key];
       });
-      // Textes avec HTML (strong, etc.)
       document.querySelectorAll('[data-i18n-html]').forEach(el => {
         const key = el.getAttribute('data-i18n-html');
-        if (traductions[lang][key] !== undefined) {
-          el.innerHTML = traductions[lang][key];
-        }
+        if (traductions[lang][key] !== undefined) el.innerHTML = traductions[lang][key];
       });
-      // Boutons langue
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('actif'));
       document.getElementById('btn-' + lang).classList.add('actif');
-      // Attribut lang sur <html>
       document.documentElement.lang = lang;
     }
 
-    // Langue par défaut
     setLang('fr');
-
 
     /* ─── ANIMATION DU TITRE ─── */
     (function animerTitre() {
@@ -696,13 +699,11 @@
       });
     })();
 
-
     /* ─── SLIDESHOW ─── */
     (function slideshow() {
       const conteneurSlides = document.getElementById('hero');
       const slidesArray = Array.from(document.querySelectorAll('.slide'));
 
-      // Mélange aléatoire (Fisher-Yates)
       for (let i = slidesArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [slidesArray[i], slidesArray[j]] = [slidesArray[j], slidesArray[i]];
@@ -710,7 +711,6 @@
 
       const heroContenu = document.querySelector('.hero-contenu');
       slidesArray.forEach(slide => conteneurSlides.insertBefore(slide, heroContenu));
-
       slidesArray.forEach(s => s.classList.remove('active'));
       slidesArray[0].classList.add('active');
 
