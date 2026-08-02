@@ -232,11 +232,12 @@
 
     /* Grille vidéo : 1 colonne par défaut, 2 si plusieurs vidéos */
     .grille-video {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-      max-width: 900px;
-    }
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* ← était 1fr */
+  gap: 3rem;
+  max-width: 1200px;                       /* ← était 900px */
+}
+
 
     .carte-video-wrapper {
       display: flex;
@@ -518,6 +519,22 @@
           <p class="video-description" data-i18n="film1_description">Une journée à l'Ancienne — Salinelles, 2026.</p>
         </div>
       </div>
+            <div class="carte-video-wrapper">
+        <div class="video-embed">
+          <iframe
+            src="https://player.vimeo.com/video/1214951033?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="Salinelles en fête">
+          </iframe>
+        </div>
+        <div class="video-meta">
+          <p class="video-categorie" data-i18n="film2_categorie">Documentaire</p>
+          <h3 class="video-titre" data-i18n="film2_titre">Salinelles en fête</h3>
+          <p class="video-description" data-i18n="film2_description">Clip de l'événement — Salinelles, 2026.</p>
+        </div>
+      </div>
+
 
     </div>
   </section>
@@ -588,6 +605,10 @@
         film1_categorie:  "Documentaire",
         film1_titre:      "50 ans du comité des fêtes de Salinelles",
         film1_description:"Une journée à l'Ancienne — Salinelles, 2025.",
+        film2_categorie:  "Documentaire",
+film2_titre:      "Salinelles en fête",
+film2_description:"Clip de l'événement — Salinelles, 2026.",
+
         contact_cta:      "Travaillons ensemble",
         bio_1: `Photographe et Assistant Réalisateur basé à <strong>Sommières</strong> dans le Gard, je travaille depuis 2015
           sur les plateaux de tournage en fiction télé. En m'appuyant sur une <strong>formation technique</strong> solide,
@@ -620,6 +641,10 @@
         film1_categorie:  "Documentary",
         film1_titre:      "50 years of the Salinelles village committee",
         film1_description:"A day in the old way — Salinelles, 2025.",
+        film2_categorie:  "Documentary",
+film2_titre:      "Salinelles en fête",
+film2_description:"Event film — Salinelles, 2026.",
+
         contact_cta:      "Let's work together",
         bio_1: `Photographer and Assistant Director based in <strong>Sommières</strong>, South of France, I have been working
           since 2015 on television fiction sets. Drawing on a solid <strong>technical background</strong>, a rich
@@ -652,6 +677,10 @@
         film1_categorie:  "Documental",
         film1_titre:      "50 años del comité de fiestas de Salinelles",
         film1_description:"Un día a la antigua usanza — Salinelles, 2025.",
+        film2_categorie:  "Documental",
+film2_titre:      "Salinelles en fête",
+film2_description:"Vídeo del evento — Salinelles, 2026.",
+
         contact_cta:      "Trabajemos juntos",
         bio_1: `Fotógrafo y Ayudante de Dirección basado en <strong>Sommières</strong>, sur de Francia, trabajo desde 2015
           en platós de ficción televisiva. Apoyándome en una sólida <strong>formación técnica</strong>, una rica
